@@ -16,4 +16,8 @@ export const GlobalStyles = globalCss({
     fontFamily: 'Roboto, sans-serif',
     fontWeight: 400,
   },
+
+  a: {
+    textDecoration: 'none',
+  },
 })
