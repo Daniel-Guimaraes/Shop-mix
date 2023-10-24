@@ -10,6 +10,7 @@ import { useKeenSlider } from 'keen-slider/react'
 import { priceFormatter } from '@/utils/priceFormatter'
 
 import * as S from '@/styles/pages/home'
+import Link from 'next/link'
 
 interface HomeProps {
   products: {
@@ -41,8 +42,12 @@ export default function Home({ products }: HomeProps) {
     <S.HomeContainer ref={sliderRef} className="keen-slider">
       {products.map((product) => {
         return (
-          <section key={product.id} className="keen-slider__slide">
-            <S.Product href="#">
+          <Link
+            key={product.id}
+            href={`/product/${product.id}`}
+            className="keen-slider__slide"
+          >
+            <S.Product>
               <Image
                 src={product.imageUrl}
                 alt="Camiseta 1"
@@ -54,7 +59,7 @@ export default function Home({ products }: HomeProps) {
                 <span>{product.price}</span>
               </S.ProductFooter>
             </S.Product>
-          </section>
+          </Link>
         )
       })}
     </S.HomeContainer>
