@@ -31,6 +31,16 @@ export const ProductDetails = styled('section', {
   display: 'flex',
   flexDirection: 'column',
 
+  div: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+
+    a: {
+      color: '$green',
+    },
+  },
+
   h1: {
     fontSize: '$2xl',
     color: '$title',
