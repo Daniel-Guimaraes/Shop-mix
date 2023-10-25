@@ -1,10 +1,13 @@
 import { stripe } from '@/lib/stripe'
 import * as S from '@/styles/pages/product'
 import { priceFormatter } from '@/utils/priceFormatter'
+import axios from 'axios'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useState } from 'react'
 import Stripe from 'stripe'
+// import { InfinitySpin } from 'react-loader-spinner'
 
 interface ProductProps {
   product: {
@@ -13,10 +16,30 @@ interface ProductProps {
     description: string
     price: string
     imageUrl: string
+    defaultPriceId: string
   }
 }
 
 export default function ProductDetails({ product }: ProductProps) {
+  const [isLoading, setIsLoading] = useState(false)
+
+  const handleBuyButton = async () => {
+    try {
+      setIsLoading(true)
+
+      const response = await axios.post('/api/checkout', {
+        priceId: product.defaultPriceId,
+      })
+
+      const { checkoutUrl } = response.data
+
+      window.location.href = checkoutUrl
+    } catch (err) {
+      alert('Falha ao redirecionar para o checkout')
+      setIsLoading(false)
+    }
+  }
+
   return (
     <S.ProductContainer>
       <S.ImageContainer>
@@ -38,7 +61,9 @@ export default function ProductDetails({ product }: ProductProps) {
 
         <p>{product.description}</p>
 
-        <button>Comprar agora</button>
+        <button onClick={handleBuyButton} disabled={isLoading}>
+          {isLoading ? <S.Loading /> : 'Comprar agora'}
+        </button>
       </S.ProductDetails>
     </S.ProductContainer>
   )
@@ -69,6 +94,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         imageUrl: product.images[0],
         price:
           price.unit_amount && priceFormatter.format(price.unit_amount / 100),
+        defaultPriceId: price.id,
       },
     },
     revalidate: 60 * 60 * 1, // 1hour
