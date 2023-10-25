@@ -1,4 +1,4 @@
-import { styled } from '..'
+import { keyframes, styled } from '..'
 
 export const ProductContainer = styled('main', {
   display: 'grid',
@@ -71,8 +71,30 @@ export const ProductDetails = styled('section', {
     fontSize: '$md',
     transition: 'background 0.2s',
 
-    '&:hover': {
+    display: 'flex',
+    justifyContent: 'center',
+
+    '&:disabled': {
+      opacity: 0.7,
+      cursor: 'not-allowed',
+    },
+
+    '&:not(:disabled):hover': {
       background: '$greenLight',
     },
   },
+})
+
+const loadingAnimation = keyframes({
+  to: { transform: 'rotate(1turn)' },
+})
+
+export const Loading = styled('div', {
+  border: '3px solid rgba(255, 255, 255, 0.1)',
+  borderTopColor: '$white',
+  height: '1.5rem',
+  width: '1.5rem',
+  borderRadius: '50%',
+
+  animation: `${loadingAnimation} 1s infinite`,
 })
