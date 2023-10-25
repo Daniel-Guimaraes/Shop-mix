@@ -1,13 +1,17 @@
-import { stripe } from '@/lib/stripe'
-import * as S from '@/styles/pages/product'
-import { priceFormatter } from '@/utils/priceFormatter'
-import axios from 'axios'
+import { useState } from 'react'
+
 import { GetStaticPaths, GetStaticProps } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useState } from 'react'
+
+import axios from 'axios'
+
+import { stripe } from '@/lib/stripe'
 import Stripe from 'stripe'
-// import { InfinitySpin } from 'react-loader-spinner'
+
+import { priceFormatter } from '@/utils/priceFormatter'
+
+import * as S from '@/styles/pages/product'
 
 interface ProductProps {
   product: {
