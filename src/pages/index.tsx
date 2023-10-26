@@ -11,6 +11,7 @@ import { priceFormatter } from '@/utils/priceFormatter'
 
 import * as S from '@/styles/pages/home'
 import Link from 'next/link'
+import Head from 'next/head'
 
 interface HomeProps {
   products: {
@@ -39,31 +40,37 @@ export default function Home({ products }: HomeProps) {
   })
 
   return (
-    <S.HomeContainer ref={sliderRef} className="keen-slider">
-      {products.map((product) => {
-        return (
-          <Link
-            key={product.id}
-            href={`/product/${product.id}`}
-            className="keen-slider__slide"
-            prefetch={false}
-          >
-            <S.Product>
-              <Image
-                src={product.imageUrl}
-                alt="Camiseta 1"
-                width={520}
-                height={480}
-              />
-              <S.ProductFooter>
-                <strong>{product.name}</strong>
-                <span>{product.price}</span>
-              </S.ProductFooter>
-            </S.Product>
-          </Link>
-        )
-      })}
-    </S.HomeContainer>
+    <>
+      <Head>
+        <title>Home | ShopCenter</title>
+      </Head>
+
+      <S.HomeContainer ref={sliderRef} className="keen-slider">
+        {products.map((product) => {
+          return (
+            <Link
+              key={product.id}
+              href={`/product/${product.id}`}
+              className="keen-slider__slide"
+              prefetch={false}
+            >
+              <S.Product>
+                <Image
+                  src={product.imageUrl}
+                  alt="Camiseta 1"
+                  width={520}
+                  height={480}
+                />
+                <S.ProductFooter>
+                  <strong>{product.name}</strong>
+                  <span>{product.price}</span>
+                </S.ProductFooter>
+              </S.Product>
+            </Link>
+          )
+        })}
+      </S.HomeContainer>
+    </>
   )
 }
 
