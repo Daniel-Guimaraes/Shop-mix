@@ -55,8 +55,7 @@ export default function ProductDetails({ product }: ProductProps) {
         <S.ImageContainer>
           <Image
             src={product.imageUrl}
-            width={520}
-            height={480}
+            fill
             alt="Imagem ilustrativa de uma camiseta"
           />
         </S.ImageContainer>

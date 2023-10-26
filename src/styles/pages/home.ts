@@ -29,6 +29,16 @@ export const Product = styled('div', {
       opacity: 1,
     },
   },
+
+  '@sm': {
+    minHeight: 500,
+
+    div: {
+      width: '400px',
+      height: '380px',
+      position: 'relative',
+    },
+  },
 })
 
 export const ProductFooter = styled('footer', {
@@ -59,5 +69,19 @@ export const ProductFooter = styled('footer', {
     fontSize: '$xl',
     fontWeight: 'bold',
     color: '$greenLight',
+  },
+
+  '@sm': {
+    padding: '1.5rem',
+    transform: 'none',
+    opacity: 'initial',
+
+    strong: {
+      fontSize: '1rem',
+    },
+
+    span: {
+      fontSize: '$lg',
+    },
   },
 })

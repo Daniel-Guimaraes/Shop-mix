@@ -55,12 +55,9 @@ export default function Home({ products }: HomeProps) {
               prefetch={false}
             >
               <S.Product>
-                <Image
-                  src={product.imageUrl}
-                  alt="Camiseta 1"
-                  width={520}
-                  height={480}
-                />
+                <div>
+                  <Image src={product.imageUrl} alt="Camiseta 1" fill />
+                </div>
                 <S.ProductFooter>
                   <strong>{product.name}</strong>
                   <span>{product.price}</span>

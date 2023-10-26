@@ -10,6 +10,11 @@ export const {
   keyframes,
   styled,
 } = createStitches({
+  media: {
+    sm: '(max-width: 760px)',
+    lg: '(min-width: 1024px)',
+  },
+
   theme: {
     colors: {
       background: '#121214',

@@ -8,6 +8,13 @@ export const ProductContainer = styled('main', {
 
   maxWidth: 1180,
   margin: '0 auto',
+
+  '@sm': {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '4rem',
+    paddingBottom: '4rem',
+  },
 })
 
 export const ImageContainer = styled('section', {
@@ -17,6 +24,7 @@ export const ImageContainer = styled('section', {
   background: 'linear-gradient(180deg, #1EA483 0%, #7465D4 100%)',
   padding: '0.25rem',
   borderRadius: 8,
+  position: 'relative',
 
   display: 'flex',
   alignItems: 'center',
@@ -24,6 +32,11 @@ export const ImageContainer = styled('section', {
 
   img: {
     objectFit: 'cover',
+  },
+
+  '@sm': {
+    position: 'relative',
+    height: 400,
   },
 })
 
@@ -81,6 +94,26 @@ export const ProductDetails = styled('section', {
 
     '&:not(:disabled):hover': {
       background: '$greenLight',
+    },
+  },
+
+  '@sm': {
+    h1: {
+      fontSize: '$xl',
+    },
+
+    span: {
+      fontSize: '$xl',
+    },
+
+    p: {
+      fontSize: '$sm',
+    },
+
+    button: {
+      fontSize: '$sm',
+      padding: '1rem',
+      marginTop: '5rem',
     },
   },
 })

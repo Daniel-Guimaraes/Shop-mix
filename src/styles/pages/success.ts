@@ -36,6 +36,20 @@ export const SuccessContainer = styled('main', {
       color: '$greenLight',
     },
   },
+
+  '@sm': {
+    h1: {
+      fontSize: '$xl',
+    },
+
+    p: {
+      fontSize: '$md',
+    },
+
+    a: {
+      fontSize: '$sm',
+    },
+  },
 })
 
 export const ImageContainer = styled('div', {
