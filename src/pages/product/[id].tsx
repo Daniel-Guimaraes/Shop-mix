@@ -12,6 +12,7 @@ import Stripe from 'stripe'
 import { priceFormatter } from '@/utils/priceFormatter'
 
 import * as S from '@/styles/pages/product'
+import Head from 'next/head'
 
 interface ProductProps {
   product: {
@@ -45,31 +46,37 @@ export default function ProductDetails({ product }: ProductProps) {
   }
 
   return (
-    <S.ProductContainer>
-      <S.ImageContainer>
-        <Image
-          src={product.imageUrl}
-          width={520}
-          height={480}
-          alt="Imagem ilustrativa de uma camiseta"
-        />
-      </S.ImageContainer>
+    <>
+      <Head>
+        <title>{product.name} | ShopCenter</title>
+      </Head>
 
-      <S.ProductDetails>
-        <div>
-          <h1>{product.name}</h1>
-          <Link href={'/'}>Voltar</Link>
-        </div>
+      <S.ProductContainer>
+        <S.ImageContainer>
+          <Image
+            src={product.imageUrl}
+            width={520}
+            height={480}
+            alt="Imagem ilustrativa de uma camiseta"
+          />
+        </S.ImageContainer>
 
-        <span>{product.price}</span>
+        <S.ProductDetails>
+          <div>
+            <h1>{product.name}</h1>
+            <Link href={'/'}>Voltar</Link>
+          </div>
 
-        <p>{product.description}</p>
+          <span>{product.price}</span>
 
-        <button onClick={handleBuyButton} disabled={isLoading}>
-          {isLoading ? <S.Loading /> : 'Comprar agora'}
-        </button>
-      </S.ProductDetails>
-    </S.ProductContainer>
+          <p>{product.description}</p>
+
+          <button onClick={handleBuyButton} disabled={isLoading}>
+            {isLoading ? <S.Loading /> : 'Comprar agora'}
+          </button>
+        </S.ProductDetails>
+      </S.ProductContainer>
+    </>
   )
 }
 
