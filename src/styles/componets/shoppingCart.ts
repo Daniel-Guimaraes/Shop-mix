@@ -45,9 +45,35 @@ export const ShoppingCartContainer = styled('aside', {
     cursor: 'pointer',
     transition: 'background 0.2s',
 
-    '&:hover': {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+
+    '&:disabled': {
+      opacity: 0.7,
+      cursor: 'not-allowed',
+    },
+
+    '&:not(:disabled):hover': {
       background: '$greenLight',
     },
+  },
+})
+
+export const ProductList = styled('div', {
+  overflowY: 'auto',
+
+  '&::-webkit-scrollbar': {
+    width: '7px',
+  },
+
+  '&::-webkit-scrollbar-thumb': {
+    background: '$green', // Cor da barra de rolagem
+    borderRadius: '6px', // Raio da borda da barra de rolagem
+  },
+
+  '&::-webkit-scrollbar-thumb:hover': {
+    background: '$green', // Cor da barra de rolagem ao passar o mouse
   },
 })
 
@@ -94,10 +120,12 @@ export const ImageContainer = styled('div', {
   height: 'auto',
   background: 'linear-gradient(180deg, #1EA483 0%, #7465D4 100%)',
   borderRadius: 8,
+  position: 'relative',
 })
 
 export const Quantity = styled('div', {
   marginTop: 'auto',
+  paddingTop: '1.5rem',
 
   display: 'flex',
   justifyContent: 'space-between',

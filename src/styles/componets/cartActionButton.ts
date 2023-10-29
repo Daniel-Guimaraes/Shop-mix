@@ -6,6 +6,22 @@ export const ButtonContainer = styled('button', {
   cursor: 'pointer',
   borderRadius: 8,
   lineHeight: 0,
+  position: 'relative',
+
+  div: {
+    position: 'absolute',
+    width: '1.5rem',
+    height: '1.5rem',
+    top: '-7px',
+    right: '-7px',
+    background: '$green',
+    color: '$white',
+    borderRadius: 999,
+
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 
   variants: {
     background: {

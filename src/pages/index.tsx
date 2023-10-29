@@ -12,18 +12,33 @@ import { priceFormatter } from '@/utils/priceFormatter'
 import * as S from '@/styles/pages/home'
 import Link from 'next/link'
 import Head from 'next/head'
-import { ShoppingCart } from '@/components/ShoppingCart'
+
+import { CartActionButton } from '@/components/CartActionButton'
+import { useShoppingCart } from 'use-shopping-cart'
 
 interface HomeProps {
   products: {
+    sku: string
     id: string
     name: string
     imageUrl: string
-    price: string
+    price: number
+    currency: ''
   }[]
 }
 
+interface ProductProps {
+  sku: string
+  id: string
+  name: string
+  imageUrl: string
+  price: number
+  currency: ''
+}
+
 export default function Home({ products }: HomeProps) {
+  const { addItem, cartDetails } = useShoppingCart()
+
   const [sliderRef] = useKeenSlider({
     slides: {
       perView: 1,
@@ -40,6 +55,14 @@ export default function Home({ products }: HomeProps) {
     },
   })
 
+  function handleAddToCart(product: ProductProps) {
+    if (cartDetails && cartDetails[product.id]) {
+      return alert('Produto já adicionado')
+    }
+
+    addItem(product)
+  }
+
   return (
     <>
       <Head>
@@ -49,22 +72,29 @@ export default function Home({ products }: HomeProps) {
       <S.HomeContainer ref={sliderRef} className="keen-slider">
         {products.map((product) => {
           return (
-            <Link
-              key={product.id}
-              href={`/product/${product.id}`}
-              className="keen-slider__slide"
-              prefetch={false}
-            >
-              <S.Product>
+            <S.Product key={product.id} className="keen-slider__slide">
+              <Link
+                key={product.id}
+                href={`/product/${product.id}`}
+                prefetch={false}
+              >
                 <div>
                   <Image src={product.imageUrl} alt="Camiseta 1" fill />
                 </div>
-                <S.ProductFooter>
+              </Link>
+              <S.ProductFooter>
+                <div>
                   <strong>{product.name}</strong>
-                  <span>{product.price}</span>
-                </S.ProductFooter>
-              </S.Product>
-            </Link>
+                  <span>{priceFormatter.format(product.price / 100)}</span>
+                </div>
+
+                <CartActionButton
+                  background="green"
+                  onClick={() => handleAddToCart(product)}
+                  colorSvg="white"
+                />
+              </S.ProductFooter>
+            </S.Product>
           )
         })}
       </S.HomeContainer>
@@ -81,11 +111,11 @@ export const getStaticProps: GetStaticProps = async () => {
     const price = product.default_price as Stripe.Price
 
     return {
+      sku: product.id,
       id: product.id,
       name: product.name,
       imageUrl: product.images[0],
-      price:
-        price.unit_amount && priceFormatter.format(price.unit_amount / 100),
+      price: price.unit_amount,
     }
   })
 

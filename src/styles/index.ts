@@ -21,6 +21,7 @@ export const {
       elements: '#202024',
       text: '#C4C4CC',
       title: '#E1E1E6',
+      icon: '#8D8D99',
 
       white: '#FFFFFF',
 

@@ -17,18 +17,23 @@ export const ProductContainer = styled('main', {
   },
 })
 
-export const ImageContainer = styled('section', {
+export const ImageContainer = styled('div', {
   width: '100%',
   maxWidth: 576,
   height: 656,
   background: 'linear-gradient(180deg, #1EA483 0%, #7465D4 100%)',
   padding: '0.25rem',
   borderRadius: 8,
-  position: 'relative',
 
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
+
+  div: {
+    position: 'relative',
+    width: 520,
+    height: 480,
+  },
 
   img: {
     objectFit: 'cover',
@@ -87,13 +92,8 @@ export const ProductDetails = styled('section', {
     display: 'flex',
     justifyContent: 'center',
 
-    '&:disabled': {
-      opacity: 0.7,
-      cursor: 'not-allowed',
-    },
-
-    '&:not(:disabled):hover': {
-      background: '$greenLight',
+    '&:hover': {
+      backgroundColor: '$greenLight',
     },
   },
 

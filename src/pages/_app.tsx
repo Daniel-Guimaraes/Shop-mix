@@ -8,6 +8,7 @@ import * as S from '@/styles/pages/app'
 import { CartActionButton } from '@/components/CartActionButton'
 import { useState } from 'react'
 import { ShoppingCart } from '@/components/ShoppingCart'
+import { CartProvider } from 'use-shopping-cart'
 
 GlobalStyles()
 
@@ -18,21 +19,31 @@ export default function App({ Component, pageProps }: AppProps) {
     setIsCartOpen(!isCartOpen)
   }
 
+  const stripePublicKey = process.env.STRIPE_PUBLIC_KEY || ''
+
   return (
     <S.Container>
-      <S.Header>
-        <Image src={logoImg} alt="logo" width={130} height={52} />
+      <CartProvider
+        cartMode="checkout-session"
+        stripe={stripePublicKey}
+        currency="BRL"
+        shouldPersist
+      >
+        <S.Header>
+          <Image src={logoImg} alt="logo" width={130} height={52} />
 
-        <CartActionButton
-          onClick={handleCartAction}
-          background="gray"
-          colorSvg="gray"
-        />
-      </S.Header>
+          <CartActionButton
+            onClick={handleCartAction}
+            background="gray"
+            colorSvg="gray"
+            count
+          />
+        </S.Header>
 
-      <ShoppingCart cartAction={isCartOpen} onCloseCart={handleCartAction} />
+        <ShoppingCart cartAction={isCartOpen} onCloseCart={handleCartAction} />
 
-      <Component {...pageProps} />
+        <Component {...pageProps} />
+      </CartProvider>
     </S.Container>
   )
 }

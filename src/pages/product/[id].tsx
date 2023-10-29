@@ -1,10 +1,6 @@
-import { useState } from 'react'
-
 import { GetStaticPaths, GetStaticProps } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
-
-import axios from 'axios'
 
 import { stripe } from '@/lib/stripe'
 import Stripe from 'stripe'
@@ -13,36 +9,39 @@ import { priceFormatter } from '@/utils/priceFormatter'
 
 import * as S from '@/styles/pages/product'
 import Head from 'next/head'
+import { useShoppingCart } from 'use-shopping-cart'
 
 interface ProductProps {
   product: {
+    sku: string
     id: string
     name: string
     description: string
-    price: string
+    price: number
     imageUrl: string
     defaultPriceId: string
+    currency: 'BRL'
   }
 }
 
+interface ProductInCartProps {
+  sku: string
+  id: string
+  name: string
+  price: number
+  imageUrl: string
+  currency: 'BRL'
+}
+
 export default function ProductDetails({ product }: ProductProps) {
-  const [isLoading, setIsLoading] = useState(false)
+  const { addItem, cartDetails } = useShoppingCart()
 
-  const handleBuyButton = async () => {
-    try {
-      setIsLoading(true)
-
-      const response = await axios.post('/api/checkout', {
-        priceId: product.defaultPriceId,
-      })
-
-      const { checkoutUrl } = response.data
-
-      window.location.href = checkoutUrl
-    } catch (err) {
-      alert('Falha ao redirecionar para o checkout')
-      setIsLoading(false)
+  function handleAddToCart(product: ProductInCartProps) {
+    if (cartDetails && cartDetails[product.id]) {
+      return alert('Produto já adicionado')
     }
+
+    addItem(product)
   }
 
   return (
@@ -53,11 +52,13 @@ export default function ProductDetails({ product }: ProductProps) {
 
       <S.ProductContainer>
         <S.ImageContainer>
-          <Image
-            src={product.imageUrl}
-            fill
-            alt="Imagem ilustrativa de uma camiseta"
-          />
+          <div>
+            <Image
+              src={product.imageUrl}
+              fill
+              alt="Imagem ilustrativa de uma camiseta"
+            />
+          </div>
         </S.ImageContainer>
 
         <S.ProductDetails>
@@ -66,12 +67,12 @@ export default function ProductDetails({ product }: ProductProps) {
             <Link href={'/'}>Voltar</Link>
           </div>
 
-          <span>{product.price}</span>
+          <span>{priceFormatter.format(product.price / 100)}</span>
 
           <p>{product.description}</p>
 
-          <button onClick={handleBuyButton} disabled={isLoading}>
-            {isLoading ? <S.Loading /> : 'Comprar agora'}
+          <button onClick={() => handleAddToCart(product)}>
+            Adicionar no carrinho
           </button>
         </S.ProductDetails>
       </S.ProductContainer>
@@ -102,8 +103,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         name: product.name,
         description: product.description,
         imageUrl: product.images[0],
-        price:
-          price.unit_amount && priceFormatter.format(price.unit_amount / 100),
+        price: price.unit_amount,
         defaultPriceId: price.id,
       },
     },

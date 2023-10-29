@@ -16,13 +16,16 @@ export const Product = styled('div', {
   minHeight: 656,
 
   display: 'flex',
+  flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
 
-  div: {
-    position: 'relative',
-    width: 480,
-    height: 420,
+  a: {
+    div: {
+      position: 'relative',
+      width: 520,
+      height: 480,
+    },
   },
 
   img: {
@@ -38,21 +41,12 @@ export const Product = styled('div', {
 
   '@sm': {
     minHeight: 500,
-
-    div: {
-      width: '400px',
-      height: '380px',
-      position: 'relative',
-    },
   },
 })
 
 export const ProductFooter = styled('footer', {
-  position: 'absolute',
-  bottom: '0.25rem',
-  left: '0.25rem',
-  right: '0.25rem',
   padding: '2rem',
+  width: '100%',
 
   borderRadius: 6,
 
@@ -60,11 +54,17 @@ export const ProductFooter = styled('footer', {
   alignItems: 'center',
   justifyContent: 'space-between',
 
-  backgroundColor: 'rgba(0, 0, 0, 0.6)',
+  backgroundColor: 'rgba(32, 32, 36, 0.90)',
 
-  transform: 'translateY(110%)',
-  opacity: 0,
   transition: 'all 0.2s ease-in-out',
+  transform: 'translateY(100%)',
+  opacity: 0,
+
+  div: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '0.25rem',
+  },
 
   strong: {
     fontSize: '$md',
