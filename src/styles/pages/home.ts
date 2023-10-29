@@ -19,6 +19,12 @@ export const Product = styled('div', {
   alignItems: 'center',
   justifyContent: 'center',
 
+  div: {
+    position: 'relative',
+    width: 480,
+    height: 420,
+  },
+
   img: {
     objectFit: 'cover',
   },

@@ -12,6 +12,7 @@ import { priceFormatter } from '@/utils/priceFormatter'
 import * as S from '@/styles/pages/home'
 import Link from 'next/link'
 import Head from 'next/head'
+import { ShoppingCart } from '@/components/ShoppingCart'
 
 interface HomeProps {
   products: {
